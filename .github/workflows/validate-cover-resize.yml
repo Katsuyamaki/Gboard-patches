@@ -21,7 +21,7 @@ jobs:
           ref: feat/independent-foldable-resize-profiles
       - name: Verify exact feature SHA
         run: |
-          test "$(git rev-parse HEAD)" = "50db62740685409c756d5b1cca31b1f892c21b15"
+          test "$(git rev-parse HEAD)" = "1a9b3756f4965763a639de8afcdc6a90eb68b1a5"
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
