@@ -1,0 +1,43 @@
+name: Validate contribution - package rename
+
+on:
+  push:
+    branches:
+      - ci/validate-package-rename
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  package-rename:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/package-rename-developer-options-queries
+      - name: Verify exact contribution SHA
+        run: |
+          test "$(git rev-parse HEAD)" = "333232b06725d163a7f30ce8d962149d46a27308"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v4
+      - name: Run upstream tests and compile Morphe MPP
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon test :patches:buildAndroid :patches:generatePatchesList
+      - name: Assert no patch catalog drift
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          rows=json.loads(Path('patches-list.json').read_text())['patches']
+          assert len(rows)==44, f'unexpected patch count {len(rows)}'
+          assert Path('patches/build/libs/patches-3.13.0.mpp').is_file()
+          print('PASS: all 44 upstream Morphe patches retained')
+          PY
