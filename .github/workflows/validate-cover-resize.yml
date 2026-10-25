@@ -1,0 +1,50 @@
+name: Validate contribution - cover Resize
+
+on:
+  push:
+    branches:
+      - ci/validate-cover-resize
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  cover-resize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/independent-foldable-resize-profiles
+      - name: Verify exact feature SHA
+        run: |
+          test "$(git rev-parse HEAD)" = "50db62740685409c756d5b1cca31b1f892c21b15"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v4
+      - name: Test upstream modules and compile MPP
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon test :patches:buildAndroid :patches:generatePatchesList
+      - name: Verify original 44 plus optional Resize; no version-code override
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          names=json.loads(Path('patches-list.json').read_text())['patches']
+          special=[row for row in names if row['name']=='Independent cover/main Resize profiles']
+          assert len(names)==45 and len(special)==1 and special[0]['use'] is False
+          assert Path('patches/build/libs/patches-3.13.0.mpp').exists()
+          source='\n'.join(p.read_text() for p in Path('patches/src/main/kotlin/dev/jason/gboardpatches/patches/gboard/features/modevariant').glob('*.kt'))
+          assert 'V239' not in source and 'VersionCodeGate' not in source
+          assert 'GboardVariantSelectorActivity' not in source
+          assert 'MODE_VARIANT_WRITE_MODE' not in source
+          runtime=Path('extensions/extension/src/main/java/dev/jason/gboardpatches/extension/modevariant/GboardModeVariantRuntime.java').read_text()
+          assert 'report()' not in runtime and 'trustedDisplay == 1' in runtime
+          print('PASS: original 44 preserved and Resize patch is OFF by default')
+          PY
