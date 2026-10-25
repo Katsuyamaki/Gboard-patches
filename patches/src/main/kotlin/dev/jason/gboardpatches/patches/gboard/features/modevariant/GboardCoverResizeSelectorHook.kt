@@ -1,6 +1,6 @@
 /*
  * COVER_RESIZE_1803: opt-in, controlled replacement of only the cover normal-keyboard
- * saved variant string at the already owner-observed Lpma.d READ/SAVE path.
+ * saved variant string at the exact Gboard 18.0.3 Lpfq.d READ/SAVE path.
  * Original mode/family/IME remains intact. See runtime for strict guards.
  */
 package dev.jason.gboardpatches.patches.gboard.features.modevariant
@@ -147,8 +147,8 @@ internal val gboardCoverResizeSelectorHook = bytecodePatch(
             ).reference)
         } == true) { "COVER_RESIZE_1803 duplicate save marker" }
         // COVER_RESIZE_1803: a SAVE must also prove its native keyboard mode is 1.
-        // Lpli.ai calls Lpli.i() twice; only its first result is used to
-        // select the map before Lpma.d. Observe the existing result register.
+        // Lpez.ai calls Lpez.i() twice; only its first result is used to
+        // select the map before Lpfq.d. Observe the existing result register.
         val saveCode = save.implementation?.instructions
             ?: error("COVER_RESIZE_1803 SAVE implementation disappeared")
         val nativeModeCalls = saveCode.indices.filter {
@@ -177,7 +177,7 @@ internal val gboardCoverResizeSelectorHook = bytecodePatch(
             RuntimeCallEmitter.invoke(RuntimeCallId.MODE_VARIANT_BEGIN_SAVE, "")
         )
 
-        // Trusted main/cover identity from actual IME service, as in IME display binding.
+        // Bind trusted main/cover identity from the actual IME service.
         val ime = findMutableMethodOrThrow(imeInputView())
         check(ime.implementation?.instructions?.none {
             it.isMethodReference(RuntimeAbiCatalog.abi(
