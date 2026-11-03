@@ -37,7 +37,12 @@ class GboardCompatibilitySourceTest {
                     .containsMatchIn(block)
             }
 
-        assertMatchesPublishedRegistrationCount(publicPatchBlocks.size)
+        assertEquals(
+            GboardPublishedPatchCatalog.morpheRegistrations.count {
+                it.name != "Independent cover/main Resize profiles"
+            },
+            publicPatchBlocks.size,
+        )
         publicPatchBlocks.forEach { block ->
             assertEquals(
                 1,

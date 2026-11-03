@@ -14,6 +14,7 @@ import dev.jason.gboardpatches.extension.customtheme.GboardCustomThemeSettingsFe
 import dev.jason.gboardpatches.extension.frostedglass.GboardFrostedGlassSettingsFeature;
 import dev.jason.gboardpatches.extension.emojisize.GboardEmojiSizeSettingsFeature;
 import dev.jason.gboardpatches.extension.roundedkeyboard.GboardRoundedKeyboardSettingsFeature;
+import dev.jason.gboardpatches.extension.modevariant.GboardCoverResizeSettingsFeature;
 import dev.jason.gboardpatches.extension.settings.GboardFeatureGroup;
 import dev.jason.gboardpatches.extension.settings.GboardPatchesIcons;
 import dev.jason.gboardpatches.extension.settings.GboardPatchesSettingsContract;
@@ -50,6 +51,7 @@ public final class GboardKeyboardLayoutSettingsGroupFeature
                         new GboardEmojiSizeSettingsFeature(context),
                         new GboardAccessPointsMenuSettingsFeature(context),
                         new GboardSplitKeyboardSettingsFeature(context),
+                        new GboardCoverResizeSettingsFeature(context),
                         new GboardAccessibilityLayoutSettingsFeature(context),
                         new GboardRoundedKeyboardSettingsFeature(context),
                         new GboardAccessPointCountSettingsFeature(context),

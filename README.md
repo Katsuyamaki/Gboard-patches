@@ -130,6 +130,15 @@ Import custom ZIP themes and beautiful themes from the official Rboard repositor
 </details>
 
 <details>
+  <summary><code>Independent cover/main Resize profiles</code></summary>
+
+  18.0.3-only native implementation retained for review. The current 18.5.4 target does not expose this patch until its native selectors are separately verified.
+  Once enabled in Patches > Keyboard Layout, manually resize and save on each
+  display. Native Gboard stores the layouts; no Android DPI, IME selection, or
+  Samsung keyboard preferences are changed.
+</details>
+
+<details>
   <summary><code>Latin Globe Key Ignore Interval</code></summary>
 
   Add an independent English globe key ignore interval override for post-typing language-switch delay.

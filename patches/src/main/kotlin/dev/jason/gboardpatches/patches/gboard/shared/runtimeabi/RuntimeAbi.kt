@@ -1,6 +1,12 @@
 package dev.jason.gboardpatches.patches.gboard.shared.runtimeabi
 
 internal enum class RuntimeCallId(internal val encodedAbi: String) {
+    MODE_VARIANT_BIND_IME("Ldev/jason/gboardpatches/extension/modevariant/GboardModeVariantRuntime;->bindIme(Ljava/lang/Object;)V"),
+    MODE_VARIANT_BEGIN_READ("Ldev/jason/gboardpatches/extension/modevariant/GboardModeVariantRuntime;->beginRead(I)V"),
+    MODE_VARIANT_BEGIN_SAVE("Ldev/jason/gboardpatches/extension/modevariant/GboardModeVariantRuntime;->beginSave()V"),
+    MODE_VARIANT_FAMILY("Ldev/jason/gboardpatches/extension/modevariant/GboardModeVariantRuntime;->observeFamily(Ljava/lang/Object;)V"),
+    MODE_VARIANT_ROUTE_RESULT("Ldev/jason/gboardpatches/extension/modevariant/GboardModeVariantRuntime;->chooseVariant(Ljava/lang/String;)Ljava/lang/String;"),
+    MODE_VARIANT_SAVE_KEYBOARD_MODE("Ldev/jason/gboardpatches/extension/modevariant/GboardModeVariantRuntime;->observeSaveKeyboardMode(I)V"),
     KEYPRESS_HAPTICS_RUNTIME_APPLY_FLAG_VALUE("Ldev/jason/gboardpatches/extension/keypresshaptics/GboardKeypressHapticsRuntime;->applyFlagValue(Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;"),
     LANGUAGE_MODELS_RUNTIME_APPLY_FLAG_VALUE("Ldev/jason/gboardpatches/extension/languagemodels/GboardLanguageModelRuntime;->applyOverriddenFlagValue(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"),
     LANGUAGE_MODELS_RUNTIME_RESTRICT_NWP_CACHED_PACK("Ldev/jason/gboardpatches/extension/languagemodels/GboardLanguageModelRuntime;->restrictNwpCachedPack(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"),
